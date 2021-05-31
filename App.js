@@ -1,35 +1,35 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, FlatList, StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
+    const [users, setUsers] = useState([])
+
+    useEffect(() => {
+        fetch('https://randomuser.me/api/?results=20')
+            .then(response => response.json())
+            .then(data => {
+                setUsers(data.results)
+            })
+            .catch(error => {
+                console.error(error)
+            })
+    }, [])
+
     return (
         <View style={styles.container}>
             <FlatList
                 scrollEnabled={true}
-                data={[
-                    { key: "a", name: 'Devin' },
-                    { key: "b", name: 'Dan' },
-                    { key: "c", name: 'Dominic' },
-                    { key: "d", name: 'Jackson' },
-                    { key: "e", name: 'James' },
-                    { key: "f", name: 'Joel' },
-                    { key: "g", name: 'John' },
-                    { key: "h", name: 'Jillian' },
-                    { key: "i", name: 'Jimmy' },
-                    { key: "j", name: 'Julie' },
-                    { key: "k", name: 'David' },
-                    { key: "l", name: 'Danny' },
-                    { key: "m", name: 'Darla' },
-                ]}
+                data={users}
+                keyExtractor={(item) => item.login.uuid.toString()}
                 renderItem={({ item }) =>
                     <View style={styles.item}>
                         <Image
-                            source={{ uri: 'https://reactnative.dev/docs/assets/p_cat1.png' }}
-                            style={{ width: 50, height: 50 }}
+                            source={{ uri: item.picture.medium }}
+                            style={{ width: 50, height: 50, marginEnd: 10 }}
                         />
-                        <Text style={styles.item}>
-                            {item.name}
+                        <Text style={styles.text_normal}>
+                            {`${item.name.title} ${item.name.first} ${item.name.last}`}
                         </Text>
                     </View>
                 }
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 8,
-        paddingTop: 16,
+        paddingTop: 24,
         backgroundColor: '#fff',
         alignItems: 'stretch',
         justifyContent: 'center',
@@ -54,5 +54,9 @@ const styles = StyleSheet.create({
         padding: 10,
         fontSize: 18,
         height: 70,
+    },
+    text_normal: {
+        fontSize: 18,
+        textAlignVertical: 'center'
     },
 });
