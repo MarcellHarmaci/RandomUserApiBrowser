@@ -4,9 +4,14 @@ import { Image, FlatList, StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
     const [users, setUsers] = useState([])
+    const [isFetching, setIsFetching] = useState(false)
 
     useEffect(() => {
-        fetch('https://randomuser.me/api/?results=20')
+        fetchUsersAsync()        
+    }, [])
+
+    async function fetchUsersAsync() {
+        await fetch('https://randomuser.me/api/?results=20')
             .then(response => response.json())
             .then(data => {
                 setUsers(data.results)
@@ -14,21 +19,33 @@ export default function App() {
             .catch(error => {
                 console.error(error)
             })
-    }, [])
+    }
+
+    async function onRefresh() {
+        setIsFetching(true)
+        setUsers([])
+
+        // TODO Fetch random users
+        await fetchUsersAsync()
+
+        setIsFetching(false)
+    }
 
     return (
         <View style={styles.container}>
             <FlatList
-                scrollEnabled={true}
                 data={users}
-                keyExtractor={(item) => item.login.uuid.toString()}
+                scrollEnabled={true}
+                refreshing={isFetching}
+                onRefresh={ () => onRefresh() }
+                keyExtractor={ (item) => item.login.uuid.toString() }
                 renderItem={({ item }) =>
                     <View style={styles.item}>
                         <Image
                             source={{ uri: item.picture.medium }}
-                            style={{ width: 50, height: 50, marginEnd: 10 }}
+                            style={{ width: 50, height: 50 }}
                         />
-                        <Text style={styles.text_normal}>
+                        <Text style={styles.item}>
                             {`${item.name.title} ${item.name.first} ${item.name.last}`}
                         </Text>
                     </View>
