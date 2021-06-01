@@ -29,8 +29,8 @@ export default function RandomUsers({ navigation }) {
         setIsFetching(false)
     }
 
-    const navigateToUser = () => {
-        navigation.navigate("UserDetails")
+    const navigateToUser = (user) => {
+        navigation.navigate("UserDetails", user)
     };
 
     return (
@@ -42,7 +42,7 @@ export default function RandomUsers({ navigation }) {
                 onRefresh={() => onRefresh()}
                 keyExtractor={(item) => item.login.uuid}
                 renderItem={({ item }) =>
-                    <TouchableWithoutFeedback onPress={navigateToUser}>
+                    <TouchableWithoutFeedback onPress={() => navigateToUser(item)}>
                         <View style={styles.item}>
                             <Image
                                 source={{ uri: item.picture.medium }}
