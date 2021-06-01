@@ -27,7 +27,7 @@ export default function PersonDetails({ route, navigation }) {
 
                     <Image
                         source={{ uri: user.picture.large }}
-                        style={{ width: 200, height: 200, marginEnd: 8 }}
+                        style={{ width: 200, height: 200, marginEnd: 8, marginTop: 16 }}
                     />
                     <Text style={styles.title}>
                         {`${user.name.title} ${user.name.first} ${user.name.last}`}
@@ -85,11 +85,10 @@ export default function PersonDetails({ route, navigation }) {
                         <Text style={styles.attrName}>Street: </Text>
                         <Text style={styles.attrText}>{user.location.street.name}</Text>
                     </View>
-                    <View style={styles.dataItem}>
+                    <View style={{width: '100%', flexDirection: 'row', marginBottom: 16}}>
                         <Text style={styles.attrName}>Apartment: </Text>
                         <Text style={styles.attrText}>{user.location.street.number}</Text>
                     </View>
-
 
                 </View>
             </ScrollView>
@@ -113,7 +112,6 @@ const styles = StyleSheet.create({
     scrollView: {
         flex: 1,
         width: '100%',
-        paddingVertical: 8,
         paddingHorizontal: 20
     },
     title: {
