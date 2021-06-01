@@ -22,7 +22,7 @@ export default function PersonDetails({ route, navigation }) {
 
     return user ? (
         <View style={styles.container}>
-            <ScrollView style={{ flex: 1, width: '100%' }}>
+            <ScrollView style={styles.scrollView}>
                 <View style={{ alignItems: 'center' }}>
 
                     <Image
@@ -107,13 +107,18 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         height: '100%',
-        paddingVertical: 8,
-        paddingHorizontal: 20,
         backgroundColor: '#fff',
         alignItems: 'center'
     },
+    scrollView: {
+        flex: 1,
+        width: '100%',
+        paddingVertical: 8,
+        paddingHorizontal: 20
+    },
     title: {
         fontSize: 32,
+        marginTop: 4
     },
     sectionTitle: {
         fontSize: 26,
