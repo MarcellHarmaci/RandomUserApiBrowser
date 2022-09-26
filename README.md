@@ -7,7 +7,7 @@ The root of the application is the `App.js` file.
 The app consists of 2 screens.
 
 - `./screens/RandomUsers`: This is the main page of the app. It displays 20 users in a list. Pull-to-refresh and pagination is implemented.
-- `./screens/UserDetails`: Clicking on a list item, we get navigated to this screen. Here the clicked person's data is presented in more detail.
+- `./screens/UserDetails`: Clicking on a list item, we are navigated to this screen. Here the clicked person's data is presented in more detail.
 
 ## Navigation
 
